@@ -3,9 +3,9 @@ from prometheus_client import start_http_server
 from prometheus_client.core import CounterMetricFamily, REGISTRY
 import time
 
-key = os.getenv('key')
-token = os.getenv('token')
-board = os.getenv('board')
+key = os.getenv('TRELLO_API_KEY')
+token = os.getenv('TRELLO_API_TOKEN')
+board = os.getenv('TRELLO_BOARD_ID')
 
 def get_trello_lists_count(board, key, token):
     url = "https://api.trello.com/1/boards/{}".format(board)
@@ -36,7 +36,7 @@ def get_trello_lists_count(board, key, token):
         return metric_counts
     else:
         print('Error {}: {}'.format(response.status_code, response.content.decode()))
-        return None
+        return {}
 
 
 class TrelloCollector(object):
